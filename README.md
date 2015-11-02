@@ -84,4 +84,12 @@ access-token刷新
 
 http://xxxx/portal/upload_access_token/
 
+关于分享
 
+部署的时候需要修改后台的appId和access token，appId 和 access_token 均由微信公众号提供，在微信公众平台官方网站的首页位置，拿到appId和access_token并写到/portal/views.py的两个变量定义中
+
+且修改/portal/plugin.py中，最后一个方法中的地址为部署线上域名地址
+
+注意修改微信公众平台的js安全域名，添加现有域名（一级域名即可）到js安全域名列表
+
+同时更新access-token(此为微信分享实用的token，不同以上)
