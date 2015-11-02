@@ -64,7 +64,7 @@ SESSION_COOKIE_AGE = 60*10000
 DATABASES = {
     'default': {
         'ENGINE': 'django_mysqlpool.backends.mysqlpool',
-        'NAME': 'running',
+        'NAME': 'pet',
         'USER': 'root',
         'PASSWORD': 'qingdian4422',
         'HOST': '123.56.131.39',
