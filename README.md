@@ -35,7 +35,7 @@ uwsgi监听端口8123（可以按照需求自己指定）
 nginx 参考配置文件
 
 
-
+``
 server {
 	listen 80;
     gzip on;
@@ -73,7 +73,7 @@ server {
         break;
     }
 }
-
+``
 访问域名即可
 
 报名表导出：http://xxxx/pet/export/
