@@ -32,48 +32,50 @@ make stop-uwsgi 关闭uwsgi
 
 uwsgi监听端口8123（可以按照需求自己指定）
 
+-------------------------------------------------------------------------
+
 nginx 参考配置文件
 
+    server {
+        listen 80;
+        gzip on;
+        gzip_buffers 4 16k;
+        gzip_types       text/plain application/x-javascript text/css application/xml;
+        server_name 127.0.0.1;
+        location /static {
+            alias /data/pet/static;
+            break;
+        }
+        location /data {
+            alias /data/pet-backend/data;
+            break;
+        }
+        location /pet {
+            uwsgi_pass 127.0.0.1:8123;
+            uwsgi_param Host $host;
+            uwsgi_param X-Real-IP $remote_addr;
+            uwsgi_param X-Forwarded-For $proxy_add_x_forwarded_for;
+            uwsgi_param X-Forwarded-Proto $http_x_forwarded_proto;
+            include uwsgi_params;
+        }
 
-``
-server {
-	listen 80;
-    gzip on;
-    gzip_buffers 4 16k;
-    gzip_types       text/plain application/x-javascript text/css application/xml;
-	server_name 127.0.0.1;
-    location /static {
-        alias /data/pet/static;
-        break;
-    }
-    location /data {
-        alias /data/pet-backend/data;
-        break;
-    }
-    location /pet {
-		uwsgi_pass 127.0.0.1:8123;
-	    uwsgi_param Host $host;
-        uwsgi_param X-Real-IP $remote_addr;
-        uwsgi_param X-Forwarded-For $proxy_add_x_forwarded_for;
-        uwsgi_param X-Forwarded-Proto $http_x_forwarded_proto;
-        include uwsgi_params;
+        location /portal {
+            uwsgi_pass 127.0.0.1:8123;
+            uwsgi_param Host $host;
+            uwsgi_param X-Real-IP $remote_addr;
+            uwsgi_param X-Forwarded-For $proxy_add_x_forwarded_for;
+            uwsgi_param X-Forwarded-Proto $http_x_forwarded_proto;
+            include uwsgi_params;
+        }
+	    location / {
+	        alias /data/pet/template/;
+            index index.html;
+            break;
+        }
     }
 
-    location /portal {
-		uwsgi_pass 127.0.0.1:8123;
-	    uwsgi_param Host $host;
-        uwsgi_param X-Real-IP $remote_addr;
-        uwsgi_param X-Forwarded-For $proxy_add_x_forwarded_for;
-        uwsgi_param X-Forwarded-Proto $http_x_forwarded_proto;
-        include uwsgi_params;
-    }
-	location / {
-	    alias /data/pet/template/;
-        index index.html;
-        break;
-    }
-}
-``
+----------------------------------------------------------------------
+
 访问域名即可
 
 报名表导出：http://xxxx/pet/export/
